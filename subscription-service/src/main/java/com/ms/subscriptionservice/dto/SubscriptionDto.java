@@ -4,7 +4,7 @@ import com.ms.subscriptionservice.model.Gender;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -28,7 +28,7 @@ public class SubscriptionDto {
     private Boolean consentFlag;
 
     @Column(nullable = false)
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @Column
     private String firstName;

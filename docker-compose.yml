@@ -1,13 +1,26 @@
 version: "3.9"
 services:
     public-service:
+        build: ./public-service
         ports:
-        - "5000:5000"
+            - "5000:443"
     subscription-service:
+        build: ./subscription-service
         ports:
-        - "443:443"
+            - "5001:443"
+        depends_on:
+            - email-message-queue
     email-message-queue:
         image: rabbitmq:3.8
-    email-service:
+        container_name: 'rabbitmq'
+        volumes:
+            - ./email-message-queue:/rabbitmq
         ports:
-        - "444:444"
+            - "5672:5672"
+            - "15672:15672"
+    email-service:
+        build: ./email-service
+        ports:
+            - "5002:444"
+        depends_on:
+            - email-message-queue
