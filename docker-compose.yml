@@ -3,11 +3,11 @@ services:
     public-service:
         build: ./public-service
         ports:
-            - "5000:443"
+            - "5000:8081"
     subscription-service:
         build: ./subscription-service
         ports:
-            - "5001:443"
+            - "5001:8081"
         depends_on:
             - email-message-queue
     email-message-queue:
@@ -20,7 +20,5 @@ services:
             - "15672:15672"
     email-service:
         build: ./email-service
-        ports:
-            - "5002:444"
         depends_on:
             - email-message-queue
