@@ -1,6 +1,8 @@
 package com.ms.subscriptionservice.service;
 
+import com.ms.subscriptionservice.dto.EmailNotificationMessageDto;
 import com.ms.subscriptionservice.dto.SubscriptionDto;
+import com.ms.subscriptionservice.messaging.EmailNotificationMessageProducer;
 import com.ms.subscriptionservice.model.CreateSubscriptionRequestModel;
 import com.ms.subscriptionservice.repository.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +16,9 @@ import org.springframework.stereotype.Service;
 public class SubscriptionService {
     private final SubscriptionRepository subscriptionRepository;
 
-    Logger logger = LoggerFactory.getLogger(SubscriptionService.class);
+    private final EmailNotificationMessageProducer emailNotificationMessageProducer;
+
+    private static final Logger logger = LoggerFactory.getLogger(SubscriptionService.class);
 
     public Long createSubscription(CreateSubscriptionRequestModel requestModel){
         logger.info("Creating subscription: {}", requestModel.toString());
@@ -30,6 +34,8 @@ public class SubscriptionService {
 
         SubscriptionDto savedSubscriptionDto = subscriptionRepository.save(subscriptionDto);
         logger.info("Subscription persisted with id {}", savedSubscriptionDto.getId());
+
+        emailNotificationMessageProducer.sendEmailNotification(new EmailNotificationMessageDto(savedSubscriptionDto.getEmailAddress(), "Subscription created"));
 
         return savedSubscriptionDto.getId();
     }
