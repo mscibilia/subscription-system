@@ -3,11 +3,11 @@ services:
     public-service:
         build: ./public-service
         ports:
-            - "5000:8081"
+            - "5000:8080"
     subscription-service:
         build: ./subscription-service
         ports:
-            - "5001:8081"
+            - "5001:8080"
         depends_on:
             - email-message-queue
     email-message-queue:
