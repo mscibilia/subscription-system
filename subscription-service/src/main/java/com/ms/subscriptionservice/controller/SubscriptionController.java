@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/subscriptions")
+@RequestMapping(path = "/subscriptions")
 public class SubscriptionController {
 
     private final SubscriptionService subscriptionService;

@@ -32,7 +32,7 @@ public class MessagingConfiguration {
     }
 
     @Bean
-    public MessageConverter jacksonToJsonConverter() {
+    public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
     }
 
