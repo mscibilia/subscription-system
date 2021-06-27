@@ -1,5 +1,6 @@
 package com.ms.subscriptionservice.controller;
 
+import com.ms.subscriptionservice.exception.IllegalCreateSubscriptionRequestException;
 import com.ms.subscriptionservice.exception.SubscriptionNotFoundException;
 import com.ms.subscriptionservice.model.*;
 import com.ms.subscriptionservice.service.SubscriptionService;
@@ -20,7 +21,7 @@ public class SubscriptionController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public CreateSubscriptionResponseModel createSubscription(@Valid @RequestBody CreateSubscriptionRequestModel requestModel) {
+    public CreateSubscriptionResponseModel createSubscription(@Valid @RequestBody CreateSubscriptionRequestModel requestModel) throws IllegalCreateSubscriptionRequestException {
         return new CreateSubscriptionResponseModel(subscriptionService.createSubscription(requestModel));
     }
 

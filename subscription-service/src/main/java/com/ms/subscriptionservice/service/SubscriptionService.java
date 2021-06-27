@@ -2,6 +2,7 @@ package com.ms.subscriptionservice.service;
 
 import com.ms.subscriptionservice.dto.EmailNotificationMessageDto;
 import com.ms.subscriptionservice.dto.SubscriptionDto;
+import com.ms.subscriptionservice.exception.IllegalCreateSubscriptionRequestException;
 import com.ms.subscriptionservice.exception.SubscriptionNotFoundException;
 import com.ms.subscriptionservice.messaging.EmailNotificationMessageProducer;
 import com.ms.subscriptionservice.model.CreateSubscriptionRequestModel;
@@ -36,9 +37,11 @@ public class SubscriptionService {
     }
 
     public void deleteSubscription(long subscriptionId) {
-        logger.info("Deleting subscription {}", subscriptionId);
-        subscriptionRepository.deleteById(subscriptionId);
-        logger.info("Subscription with id {} deleted", subscriptionId);
+        if(subscriptionRepository.existsById(subscriptionId)) {
+            logger.info("Deleting subscription with id {}", subscriptionId);
+            subscriptionRepository.deleteById(subscriptionId);
+            logger.info("Subscription with id {} deleted", subscriptionId);
+        }
     }
 
     synchronized public void updateSubscription(UpdateSubscriptionRequestModel requestModel) throws SubscriptionNotFoundException {
@@ -60,13 +63,21 @@ public class SubscriptionService {
             subscriptionRepository.save(subscriptionDto);
             logger.info("Subscription with id {} updated", subscriptionIdToUpdate);
             emailNotificationMessageProducer
-                    .sendEmailNotification(new EmailNotificationMessageDto(subscriptionDto.getEmailAddress(), "Subscription updated"));
+                    .sendEmailNotification(new EmailNotificationMessageDto(subscriptionDto.getEmailAddress(), "Your subscription was updated"));
         } else {
-            throw new SubscriptionNotFoundException("Cannot update subscription with id " + subscriptionIdToUpdate + " as it does not exist.");
+            throw new SubscriptionNotFoundException(String.format("Cannot update subscription with id %s as it does not exist.", subscriptionIdToUpdate));
         }
     }
 
-    public Long createSubscription(CreateSubscriptionRequestModel requestModel) {
+    synchronized public Long createSubscription(CreateSubscriptionRequestModel requestModel) throws IllegalCreateSubscriptionRequestException {
+        logger.info("Checking if subscription with email address {} already exists before creating subscription", requestModel.getEmailAddress());
+        if (subscriptionRepository.findByEmailAddress(requestModel.getEmailAddress()).isPresent()) {
+            throw new IllegalCreateSubscriptionRequestException(
+                    String.format("Cannot create subscription with email address %s since one with" +
+                            " that email address already exists", requestModel.getEmailAddress())
+            );
+        }
+
         logger.info("Creating subscription: {}", requestModel.toString());
         SubscriptionDto subscriptionDto = SubscriptionDto
                 .builder()
@@ -82,7 +93,7 @@ public class SubscriptionService {
         logger.info("Subscription persisted with id {}", savedSubscriptionDto.getId());
 
         emailNotificationMessageProducer
-                .sendEmailNotification(new EmailNotificationMessageDto(savedSubscriptionDto.getEmailAddress(), "Subscription created"));
+                .sendEmailNotification(new EmailNotificationMessageDto(savedSubscriptionDto.getEmailAddress(), "Your subscription was created"));
 
         return savedSubscriptionDto.getId();
     }
