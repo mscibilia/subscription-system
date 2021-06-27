@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private static final String USER_ROLE_NAME = "USER";
+    private static final String PUBLIC_SERVICE_SYSTEM_USER_ROLE_NAME = "PUBLIC_SERVICE_SYSTEM_USER";
 
     @Value("${basic.auth.username}")
     private String basicAuthUsername;
@@ -27,7 +27,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser(basicAuthUsername)
                 .password(passwordEncoder().encode(basicAuthPassword))
-                .roles(USER_ROLE_NAME);
+                .roles(PUBLIC_SERVICE_SYSTEM_USER_ROLE_NAME);
     }
 
     @Override

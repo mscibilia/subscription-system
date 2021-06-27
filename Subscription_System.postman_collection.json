@@ -10,19 +10,7 @@
 			"name": "Create Subscription - John",
 			"request": {
 				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "secure_password",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "test_user",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "POST",
 				"header": [
@@ -55,19 +43,7 @@
 			"name": "Create Subscription - Jane",
 			"request": {
 				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "secure_password",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "test_user",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "POST",
 				"header": [
@@ -100,19 +76,7 @@
 			"name": "Update Subscription",
 			"request": {
 				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "secure_password",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "test_user",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "PUT",
 				"header": [
@@ -145,19 +109,7 @@
 			"name": "Get All Subscriptions",
 			"request": {
 				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "secure_password",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "test_user",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "GET",
 				"header": [
@@ -194,19 +146,7 @@
 			"name": "Get Subscription",
 			"request": {
 				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "secure_password",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "test_user",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "GET",
 				"header": [
@@ -244,19 +184,7 @@
 			"name": "Delete Subscription",
 			"request": {
 				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "secure_password",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "test_user",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "DELETE",
 				"header": [
@@ -293,21 +221,6 @@
 			"response": []
 		}
 	],
-	"auth": {
-		"type": "basic",
-		"basic": [
-			{
-				"key": "password",
-				"value": "secure_password",
-				"type": "string"
-			},
-			{
-				"key": "username",
-				"value": "test_user",
-				"type": "string"
-			}
-		]
-	},
 	"event": [
 		{
 			"listen": "prerequest",

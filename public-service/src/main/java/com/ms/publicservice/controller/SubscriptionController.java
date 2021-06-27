@@ -20,27 +20,27 @@ public class SubscriptionController {
     private final SubscriptionService subscriptionService;
 
     @PostMapping
-    public ResponseEntity<?> createSubscription(@Valid @RequestBody CreateSubscriptionRequestModel requestModel, @RequestHeader("authorization") String authorization) {
-        return subscriptionService.createSubscription(requestModel, authorization);
+    public ResponseEntity<?> createSubscription(@Valid @RequestBody CreateSubscriptionRequestModel requestModel) {
+        return subscriptionService.createSubscription(requestModel);
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllSubscriptions(@RequestHeader("authorization") String authorization) {
-        return subscriptionService.getAllSubscriptions(authorization);
+    public ResponseEntity<?> getAllSubscriptions() {
+        return subscriptionService.getAllSubscriptions();
     }
 
     @GetMapping(path = "/{subscriptionId}")
-    public ResponseEntity<?> getSubscription(@PathVariable long subscriptionId, @RequestHeader("authorization") String authorization) {
-        return subscriptionService.getSubscription(subscriptionId, authorization);
+    public ResponseEntity<?> getSubscription(@PathVariable long subscriptionId) {
+        return subscriptionService.getSubscription(subscriptionId);
     }
 
     @DeleteMapping(path = "/{subscriptionId}")
-    public ResponseEntity<?> deleteSubscription(@PathVariable long subscriptionId, @RequestHeader("authorization") String authorization) {
-        return subscriptionService.deleteSubscription(subscriptionId, authorization);
+    public ResponseEntity<?> deleteSubscription(@PathVariable long subscriptionId) {
+        return subscriptionService.deleteSubscription(subscriptionId);
     }
 
     @PutMapping
-    public ResponseEntity<?> updateSubscription(@Valid @RequestBody UpdateSubscriptionRequestModel requestModel, @RequestHeader("authorization") String authorization) {
-        return subscriptionService.updateSubscription(requestModel, authorization);
+    public ResponseEntity<?> updateSubscription(@Valid @RequestBody UpdateSubscriptionRequestModel requestModel) {
+        return subscriptionService.updateSubscription(requestModel);
     }
 }

@@ -11,9 +11,18 @@ public class WebConfiguration {
     @Value("${subscription-service.base.url}")
     private String subscriptionServiceBaseUrl;
 
+    @Value("${subscription-service.basic.auth.username}")
+    private String subscriptionServiceBasicAuthUsername;
+
+    @Value("${subscription-service.basic.auth.password}")
+    private String subscriptionServiceBasicAuthPassword;
+
     @Bean
     public WebClient subscriptionServiceWebClient() {
-        return WebClient.create(subscriptionServiceBaseUrl);
+        return WebClient.builder()
+                .baseUrl(subscriptionServiceBaseUrl)
+                .defaultHeaders(httpHeaders -> httpHeaders.setBasicAuth(subscriptionServiceBasicAuthUsername, subscriptionServiceBasicAuthPassword))
+                .build();
     }
 
 }
