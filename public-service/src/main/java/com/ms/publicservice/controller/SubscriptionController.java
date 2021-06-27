@@ -5,10 +5,14 @@ import com.ms.publicservice.model.UpdateSubscriptionRequestModel;
 import com.ms.publicservice.service.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @RestController
+@Validated
 @RequiredArgsConstructor
 @RequestMapping(path = "/subscriptions")
 public class SubscriptionController {
@@ -16,27 +20,27 @@ public class SubscriptionController {
     private final SubscriptionService subscriptionService;
 
     @PostMapping
-    public ResponseEntity<?> createSubscription(@RequestBody CreateSubscriptionRequestModel requestModel) {
-        return subscriptionService.createSubscription(requestModel);
+    public ResponseEntity<?> createSubscription(@Valid @RequestBody CreateSubscriptionRequestModel requestModel, @RequestHeader("authorization") String authorization) {
+        return subscriptionService.createSubscription(requestModel, authorization);
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllSubscriptions() {
-        return subscriptionService.getAllSubscriptions();
+    public ResponseEntity<?> getAllSubscriptions(@RequestHeader("authorization") String authorization) {
+        return subscriptionService.getAllSubscriptions(authorization);
     }
 
     @GetMapping(path = "/{subscriptionId}")
-    public ResponseEntity<?> getSubscription(@PathVariable long subscriptionId) {
-        return subscriptionService.getSubscription(subscriptionId);
+    public ResponseEntity<?> getSubscription(@PathVariable long subscriptionId, @RequestHeader("authorization") String authorization) {
+        return subscriptionService.getSubscription(subscriptionId, authorization);
     }
 
     @DeleteMapping(path = "/{subscriptionId}")
-    public ResponseEntity<?> deleteSubscription(@PathVariable long subscriptionId) {
-        return subscriptionService.deleteSubscription(subscriptionId);
+    public ResponseEntity<?> deleteSubscription(@PathVariable long subscriptionId, @RequestHeader("authorization") String authorization) {
+        return subscriptionService.deleteSubscription(subscriptionId, authorization);
     }
 
     @PutMapping
-    public ResponseEntity<?> updateSubscription(@RequestBody UpdateSubscriptionRequestModel requestModel) {
-        return subscriptionService.updateSubscription(requestModel);
+    public ResponseEntity<?> updateSubscription(@Valid @RequestBody UpdateSubscriptionRequestModel requestModel, @RequestHeader("authorization") String authorization) {
+        return subscriptionService.updateSubscription(requestModel, authorization);
     }
 }
