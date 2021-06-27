@@ -2,13 +2,17 @@ package com.ms.subscriptionservice.service;
 
 import com.ms.subscriptionservice.dto.EmailNotificationMessageDto;
 import com.ms.subscriptionservice.dto.SubscriptionDto;
+import com.ms.subscriptionservice.exception.SubscriptionNotFoundException;
 import com.ms.subscriptionservice.messaging.EmailNotificationMessageProducer;
 import com.ms.subscriptionservice.model.CreateSubscriptionRequestModel;
+import com.ms.subscriptionservice.model.UpdateSubscriptionRequestModel;
 import com.ms.subscriptionservice.repository.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -20,7 +24,47 @@ public class SubscriptionService {
 
     private static final Logger logger = LoggerFactory.getLogger(SubscriptionService.class);
 
-    public Long createSubscription(CreateSubscriptionRequestModel requestModel){
+    public List<SubscriptionDto> getAllSubscriptions() {
+        logger.info("Retrieving all subscriptions");
+        return subscriptionRepository.findAll();
+    }
+
+    public SubscriptionDto getSubscription(long subscriptionId) throws SubscriptionNotFoundException {
+        logger.info("Retrieving subscription {}", subscriptionId);
+        return subscriptionRepository.findById(subscriptionId)
+                .orElseThrow(() -> new SubscriptionNotFoundException("Subscription id: " + subscriptionId + " was not found."));
+    }
+
+    public void deleteSubscription(long subscriptionId) {
+        logger.info("Deleting subscription {}", subscriptionId);
+        subscriptionRepository.deleteById(subscriptionId);
+        logger.info("Subscription with id {} deleted", subscriptionId);
+    }
+
+    synchronized public void updateSubscription(UpdateSubscriptionRequestModel requestModel) throws SubscriptionNotFoundException {
+        Long subscriptionIdToUpdate = requestModel.getSubscriptionId();
+        logger.info("Checking subscription with id {} exists", subscriptionIdToUpdate);
+        if(subscriptionRepository.existsById(subscriptionIdToUpdate)) {
+            logger.info("Updating subscription with id {}", subscriptionIdToUpdate);
+            SubscriptionDto subscriptionDto = SubscriptionDto
+                    .builder()
+                    .id(requestModel.getSubscriptionId())
+                    .emailAddress(requestModel.getEmailAddress())
+                    .dateOfBirth(requestModel.getDateOfBirth())
+                    .firstName(requestModel.getFirstName())
+                    .gender(requestModel.getGender())
+                    .newsletterId(requestModel.getNewsletterId())
+                    .consentFlag(requestModel.getConsentFlag())
+                    .build();
+
+            subscriptionRepository.save(subscriptionDto);
+            logger.info("Subscription with id {} updated", subscriptionIdToUpdate);
+        } else {
+            throw new SubscriptionNotFoundException("Cannot update subscription with id " + subscriptionIdToUpdate + " as it does not exist.");
+        }
+    }
+
+    public Long createSubscription(CreateSubscriptionRequestModel requestModel) {
         logger.info("Creating subscription: {}", requestModel.toString());
         SubscriptionDto subscriptionDto = SubscriptionDto
                 .builder()
