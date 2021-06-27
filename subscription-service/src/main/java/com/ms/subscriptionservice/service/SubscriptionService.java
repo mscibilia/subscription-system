@@ -59,6 +59,8 @@ public class SubscriptionService {
 
             subscriptionRepository.save(subscriptionDto);
             logger.info("Subscription with id {} updated", subscriptionIdToUpdate);
+            emailNotificationMessageProducer
+                    .sendEmailNotification(new EmailNotificationMessageDto(subscriptionDto.getEmailAddress(), "Subscription updated"));
         } else {
             throw new SubscriptionNotFoundException("Cannot update subscription with id " + subscriptionIdToUpdate + " as it does not exist.");
         }
@@ -79,7 +81,8 @@ public class SubscriptionService {
         SubscriptionDto savedSubscriptionDto = subscriptionRepository.save(subscriptionDto);
         logger.info("Subscription persisted with id {}", savedSubscriptionDto.getId());
 
-        emailNotificationMessageProducer.sendEmailNotification(new EmailNotificationMessageDto(savedSubscriptionDto.getEmailAddress(), "Subscription created"));
+        emailNotificationMessageProducer
+                .sendEmailNotification(new EmailNotificationMessageDto(savedSubscriptionDto.getEmailAddress(), "Subscription created"));
 
         return savedSubscriptionDto.getId();
     }
