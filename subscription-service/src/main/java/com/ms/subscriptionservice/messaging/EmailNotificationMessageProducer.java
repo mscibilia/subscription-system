@@ -22,10 +22,7 @@ public class EmailNotificationMessageProducer {
 
         rabbitTemplate.convertAndSend(messagingProperties.getExchangeName(),
                 messagingProperties.getEmailNotificationRoutingKey(),
-                emailNotificationMessageDto, m -> {
-                    m.getMessageProperties().getHeaders().remove("__TypeId__");
-                    return m;
-                });
+                emailNotificationMessageDto);
 
         logger.info("Email notification sent");
     }
