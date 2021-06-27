@@ -19,56 +19,55 @@ public class SubscriptionService {
     private static final Logger logger = LoggerFactory.getLogger(SubscriptionService.class);
 
     @Value("${subscription-service.subscriptions.endpoint}")
-    private final String SUBSCRIPTIONS_ENDPOINT;
+    private String subscriptionsEndpoint;
 
     private final WebClient subscriptionServiceWebclient;
 
     public ResponseEntity<?> getAllSubscriptions() {
         return subscriptionServiceWebclient.get()
-                .uri(SUBSCRIPTIONS_ENDPOINT)
+                .uri(subscriptionsEndpoint)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchangeToMono(clientResponse ->
-                        Mono.just(new ResponseEntity(clientResponse.bodyToMono(String.class), clientResponse.statusCode())))
+                        clientResponse.toEntity(String.class))
                 .block();
     }
 
     public ResponseEntity<?> getSubscription(Long subscriptionId) {
         return subscriptionServiceWebclient.get()
-                .uri(SUBSCRIPTIONS_ENDPOINT + "/{id}", subscriptionId)
+                .uri(subscriptionsEndpoint + "/{id}", subscriptionId)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchangeToMono(clientResponse ->
-                        Mono.just(new ResponseEntity(clientResponse.bodyToMono(String.class), clientResponse.statusCode())))
+                        clientResponse.toEntity(String.class))
                 .block();
     }
 
     public ResponseEntity<?> deleteSubscription(long subscriptionId) {
         return subscriptionServiceWebclient.delete()
-                .uri(SUBSCRIPTIONS_ENDPOINT + "/{id}", subscriptionId)
-                .exchangeToMono(clientResponse -> {
-                    clientResponse.releaseBody();
-                    return Mono.just(new ResponseEntity(clientResponse.statusCode()));
-                })
+                .uri(subscriptionsEndpoint + "/{id}", subscriptionId)
+                .exchangeToMono(clientResponse ->
+                        clientResponse.toEntity(Void.class))
                 .block();
     }
 
     public ResponseEntity updateSubscription(UpdateSubscriptionRequestModel requestModel) {
         return subscriptionServiceWebclient.put()
-                .uri(SUBSCRIPTIONS_ENDPOINT)
+                .uri(subscriptionsEndpoint)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(requestModel))
                 .exchangeToMono(clientResponse ->
-                        Mono.just(new ResponseEntity(clientResponse.bodyToMono(String.class), clientResponse.statusCode())))
+                        clientResponse.toEntity(Void.class))
                 .block();
     }
 
     public ResponseEntity createSubscription(CreateSubscriptionRequestModel requestModel) {
         return subscriptionServiceWebclient.post()
-                .uri(SUBSCRIPTIONS_ENDPOINT)
+                .uri(subscriptionsEndpoint)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(requestModel))
                 .exchangeToMono(clientResponse ->
-                        Mono.just(new ResponseEntity(clientResponse.bodyToMono(String.class), clientResponse.statusCode())))
+                        clientResponse.toEntity(String.class))
                 .block();
     }
+
 }
