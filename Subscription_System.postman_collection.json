@@ -1,0 +1,333 @@
+{
+	"info": {
+		"_postman_id": "911f1745-159e-4232-b89a-dec59473c9af",
+		"name": "Subscription System",
+		"description": "Sample Requests for POST, PUT, GET and DELETE operations to the public service API in the subscription system.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Subscription - John",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "secure_password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "test_user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"emailAddress\" : \"test@dummy.com\",\n\t\"firstName\" : \"John\",\n\t\"dateOfBirth\" : \"21/11/2001\",\n\t\"consentFlag\" : true,\n\t\"newsletterId\" : \"nl1\",\n\t\"gender\" : \"MALE\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/subscriptions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Subscription - Jane",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "secure_password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "test_user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"emailAddress\" : \"test@test.com\",\n\t\"firstName\" : \"Jane\",\n\t\"dateOfBirth\" : \"21/09/1994\",\n\t\"consentFlag\" : true,\n\t\"newsletterId\" : \"nl2\",\n\t\"gender\" : \"FEMALE\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/subscriptions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Subscription",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "secure_password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "test_user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"subscriptionId\" : 1,\n\t\"emailAddress\" : \"newemail@dummy.com\",\n\t\"firstName\" : \"John\",\n\t\"dateOfBirth\" : \"21/11/2001\",\n\t\"consentFlag\" : true,\n\t\"newsletterId\" : \"nl1\",\n\t\"gender\" : \"MALE\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/subscriptions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Subscriptions",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "secure_password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "test_user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5000/subscriptions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Subscription",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "secure_password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "test_user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5000/subscriptions/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"subscriptions",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Subscription",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "secure_password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "test_user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5000/subscriptions/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"subscriptions",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "secure_password",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "test_user",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "618660ba-3a37-4062-9657-09c74dfaa557",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "3365bd97-00e2-40c4-aaef-1dd380e01cd1",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
