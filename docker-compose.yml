@@ -14,8 +14,7 @@ services:
         volumes:
             - ./email-message-queue:/rabbitmq
         ports:
-            - "5672:5672"
-            - "15672:15672"
+            - "5672"
     email-service:
         build: ./email-service
         depends_on:
