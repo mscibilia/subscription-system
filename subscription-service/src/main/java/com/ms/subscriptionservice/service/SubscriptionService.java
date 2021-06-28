@@ -33,7 +33,7 @@ public class SubscriptionService {
     public SubscriptionDto getSubscription(long subscriptionId) throws SubscriptionNotFoundException {
         logger.info("Retrieving subscription {}", subscriptionId);
         return subscriptionRepository.findById(subscriptionId)
-                .orElseThrow(() -> new SubscriptionNotFoundException("Subscription id: " + subscriptionId + " was not found."));
+                .orElseThrow(() -> new SubscriptionNotFoundException(String.format("Subscription id: %d was not found.", subscriptionId)));
     }
 
     public void deleteSubscription(long subscriptionId) {
