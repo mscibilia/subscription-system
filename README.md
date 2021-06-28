@@ -9,7 +9,7 @@
 Pre-requisite: Ensure Docker is installed on your machine
 
 From root directory of the cloned repository run:
-docker compose up --build
+**docker compose up --build**
 
 Note: The maven build runs as part of the Docker build for all API components.
 
