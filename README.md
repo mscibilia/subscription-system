@@ -1,7 +1,7 @@
 # Subscription System Architecture
 
  
-**Public Service** ------------> **Subscription Service** -----produces-----> **RabbitMQ** <-----consumes------- **Email Service**
+**Public Service** ------------> **Subscription Service** -----produces-----> **RabbitMQ** -----consumes-------> **Email Service**
 
 
 
