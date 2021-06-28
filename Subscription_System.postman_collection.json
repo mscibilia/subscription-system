@@ -23,7 +23,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"emailAddress\" : \"test@dummy.com\",\n\t\"firstName\" : \"John\",\n\t\"dateOfBirth\" : \"21/11/2001\",\n\t\"consentFlag\" : true,\n\t\"newsletterId\" : \"nl1\",\n\t\"gender\" : \"MALE\"\n}"
+					"raw": "{\n\t\"emailAddress\" : \"test1@test.com\",\n\t\"firstName\" : \"John\",\n\t\"dateOfBirth\" : \"21/11/2001\",\n\t\"consentFlag\" : true,\n\t\"newsletterId\" : \"nl1\",\n\t\"gender\" : \"MALE\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5000/subscriptions",
@@ -56,7 +56,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"emailAddress\" : \"test@test.com\",\n\t\"firstName\" : \"Jane\",\n\t\"dateOfBirth\" : \"21/09/1994\",\n\t\"consentFlag\" : true,\n\t\"newsletterId\" : \"nl2\",\n\t\"gender\" : \"FEMALE\"\n}"
+					"raw": "{\n\t\"emailAddress\" : \"test2@test.com\",\n\t\"firstName\" : \"Jane\",\n\t\"dateOfBirth\" : \"21/09/1994\",\n\t\"consentFlag\" : true,\n\t\"newsletterId\" : \"nl2\",\n\t\"gender\" : \"FEMALE\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5000/subscriptions",
@@ -166,7 +166,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:5000/subscriptions/1",
+					"raw": "http://localhost:5000/subscriptions/{id}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -174,7 +174,7 @@
 					"port": "5000",
 					"path": [
 						"subscriptions",
-						"1"
+						"{id}"
 					]
 				}
 			},
@@ -206,7 +206,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:5000/subscriptions/1",
+					"raw": "http://localhost:5000/subscriptions/{id}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -214,7 +214,7 @@
 					"port": "5000",
 					"path": [
 						"subscriptions",
-						"1"
+						"{id}"
 					]
 				}
 			},
