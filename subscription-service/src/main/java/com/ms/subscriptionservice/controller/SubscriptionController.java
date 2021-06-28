@@ -31,7 +31,8 @@ public class SubscriptionController {
                     ResponseEntity.status(HttpStatus.CREATED)
                             .body(new CreateSubscriptionResponseModel(subscriptionService.createSubscription(requestModel)));
         } catch (IllegalCreateSubscriptionRequestException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
@@ -41,11 +42,12 @@ public class SubscriptionController {
     }
 
     @GetMapping(path = "/{subscriptionId}")
-    public ResponseEntity<GetSubscriptionResponseModel> getSubscription(@PathVariable long subscriptionId) {
+    public ResponseEntity<?> getSubscription(@PathVariable long subscriptionId) {
         try {
             return ResponseEntity.ok(new GetSubscriptionResponseModel(subscriptionService.getSubscription(subscriptionId)));
         } catch (SubscriptionNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
@@ -63,7 +65,8 @@ public class SubscriptionController {
                     createResponseEntityForBindingResultErrors(result) :
                     ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (SubscriptionNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
