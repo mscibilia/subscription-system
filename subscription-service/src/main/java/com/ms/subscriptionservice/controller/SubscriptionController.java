@@ -6,13 +6,13 @@ import com.ms.subscriptionservice.model.*;
 import com.ms.subscriptionservice.service.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
-@Validated
 @RestController
 @RequestMapping(path = "/subscriptions")
 public class SubscriptionController {
@@ -21,8 +21,12 @@ public class SubscriptionController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public CreateSubscriptionResponseModel createSubscription(@Valid @RequestBody CreateSubscriptionRequestModel requestModel) throws IllegalCreateSubscriptionRequestException {
-        return new CreateSubscriptionResponseModel(subscriptionService.createSubscription(requestModel));
+    public CreateSubscriptionResponseModel createSubscription(@Valid @RequestBody CreateSubscriptionRequestModel requestModel) {
+        try {
+            return new CreateSubscriptionResponseModel(subscriptionService.createSubscription(requestModel));
+        } catch (IllegalCreateSubscriptionRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        }
     }
 
     @GetMapping
@@ -31,19 +35,27 @@ public class SubscriptionController {
     }
 
     @GetMapping(path = "/{subscriptionId}")
-    public GetSubscriptionResponseModel getSubscription(@PathVariable long subscriptionId) throws SubscriptionNotFoundException {
-        return new GetSubscriptionResponseModel(subscriptionService.getSubscription(subscriptionId));
+    public GetSubscriptionResponseModel getSubscription(@PathVariable long subscriptionId) {
+        try {
+            return new GetSubscriptionResponseModel(subscriptionService.getSubscription(subscriptionId));
+        } catch (SubscriptionNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/{subscriptionId}")
-    public void deleteSubscription(@PathVariable long subscriptionId) {
+    public ResponseEntity<?> deleteSubscription(@PathVariable long subscriptionId) {
         subscriptionService.deleteSubscription(subscriptionId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping
-    public void updateSubscription(@Valid @RequestBody UpdateSubscriptionRequestModel requestModel) throws SubscriptionNotFoundException {
-        subscriptionService.updateSubscription(requestModel);
+    public ResponseEntity<?> updateSubscription(@Valid @RequestBody UpdateSubscriptionRequestModel requestModel) {
+        try {
+            subscriptionService.updateSubscription(requestModel);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (SubscriptionNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 }
