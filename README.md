@@ -1,8 +1,8 @@
-#SUBSCRIPTION SYSTEM ARCHITECTURE
- ________________               ______________________                 __________               _______________
-|                |             |                      |   produces    |          |   consumes  |               |
-| public service |------------>| subscription service |-------------->| RabbitMQ |<------------| email service |
-|________________|             |______________________|               |__________|             |_______________|
+#Subscription System Architecture
+
+                                                    produces              consumes  
+public service ------------>subscription service -------------->RabbitMQ<------------| email service |
+
 
 
 #How to build and run the subscription system
