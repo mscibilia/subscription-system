@@ -48,3 +48,5 @@ The Swagger UI is accessible at http://localhost:5000/swagger-ui.html (when runn
 
 * Lombok - Provides annotations that generate boilerplate code for Java classes at compile time. Used to reduce time spent writing boilerplate code, making classes (especially POJOs) more succinct.
 
+* SpringDoc OpenApi UI - Automates generation of API documentation and deploys Swagger UI to a Spring Boot application. Used because it is simple and supports JSR-303.
+
