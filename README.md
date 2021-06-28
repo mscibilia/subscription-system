@@ -42,7 +42,7 @@ The Swagger UI is accessible at http://localhost:5000/swagger-ui.html (when runn
 
 * Spring Validation - Provides annotations to validate Java Beans. Used as a way to validate contraints on the fields of the request models and control the format the violations are returned to the caller.
 
-* Spring Security - Provides authentication and authorization to applications. Used as an easy way to configure basic authentication on the subsciption service so that it only accepts requests from the public service system user.
+* Spring Security - Provides authentication and authorization to applications. Used as an easy way to configure basic authentication on the subsciption service so that it only accepts https requests from the public service system user.
 
 * Spring Webflux - Provides a non-blocking HTTP client that supports Reactive Streams. Used because it is currently the recommended library to use to make HTTP calls in a Spring application.
 

@@ -64,7 +64,7 @@ public class SubscriptionService {
         logger.info("Checking if subscription with email address {} already exists before creating subscription", requestModel.getEmailAddress());
         if (subscriptionRepository.findByEmailAddress(requestModel.getEmailAddress()).isPresent()) {
             throw new IllegalCreateSubscriptionRequestException(
-                    String.format("Cannot create subscription with email address %s since one with" +
+                    String.format("Cannot create subscription with email address %s since a subscription with" +
                             " that email address already exists", requestModel.getEmailAddress())
             );
         }

@@ -38,7 +38,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
+                .httpBasic()
+                .and()
+                .requiresChannel()
+                .anyRequest()
+                .requiresSecure();
     }
 
     @Bean
