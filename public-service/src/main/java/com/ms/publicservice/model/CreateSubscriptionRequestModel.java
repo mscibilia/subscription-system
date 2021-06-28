@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import lombok.Data;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 public class CreateSubscriptionRequestModel {
 
     @NotBlank(message = "email address is mandatory")
+    @Email(message = "email address is not in a valid format")
     private String emailAddress;
 
     @NotNull(message = "consent flag is mandatory")
