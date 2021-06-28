@@ -23,13 +23,13 @@ The Swagger UI is accessible at http://localhost:5000/swagger-ui.html (when runn
 
 ## Implementation Details
 
-*When sending 'dateOfBirth' fields in request payloads, the allowed format is **dd/MM/yyyy**
+* When sending 'dateOfBirth' fields in request payloads, the allowed format is **dd/MM/yyyy**
 
-*Valid values for the 'gender' field are MALE, FEMALE and OTHER
+* Valid values for the 'gender' field in request payloads are MALE, FEMALE and OTHER
 
-*You cannot create a subscription with an email address when there is an existing subscription with that email.
+* You cannot create a subscription with an email address when there is an existing subscription with that email.
 
-*When an email is 'sent', you can observe a log entry in the email-service in format of: "Sending email to <email-address> with message <message>" (no emails are actually sent)
+* When an email is 'sent', you can observe a log entry in the email-service in format of: "Sending email to <email-address> with message <message>" (no emails are actually sent)
 
 
 # Frameworks/Libraries
