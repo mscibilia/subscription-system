@@ -7,10 +7,14 @@ import com.ms.subscriptionservice.service.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -21,9 +25,12 @@ public class SubscriptionController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public CreateSubscriptionResponseModel createSubscription(@Valid @RequestBody CreateSubscriptionRequestModel requestModel) {
+    public ResponseEntity<?> createSubscription(@Valid @RequestBody CreateSubscriptionRequestModel requestModel, BindingResult result) {
         try {
-            return new CreateSubscriptionResponseModel(subscriptionService.createSubscription(requestModel));
+            return result.hasErrors() ?
+                    createResponseEntityForBindingResultErrors(result) :
+                    ResponseEntity.status(HttpStatus.CREATED)
+                            .body(new CreateSubscriptionResponseModel(subscriptionService.createSubscription(requestModel)));
         } catch (IllegalCreateSubscriptionRequestException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
         }
@@ -50,12 +57,21 @@ public class SubscriptionController {
     }
 
     @PutMapping
-    public ResponseEntity<?> updateSubscription(@Valid @RequestBody UpdateSubscriptionRequestModel requestModel) {
+    public ResponseEntity<?> updateSubscription(@Valid @RequestBody UpdateSubscriptionRequestModel requestModel, BindingResult result) {
         try {
             subscriptionService.updateSubscription(requestModel);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return result.hasErrors() ?
+                    createResponseEntityForBindingResultErrors(result) :
+                    ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (SubscriptionNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
+    }
+
+    private ResponseEntity<String> createResponseEntityForBindingResultErrors(BindingResult result) {
+        List<String> errorMessages = result.getAllErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList());
+        Optional<String> errorMessage = errorMessages.stream().reduce((a, b)-> a + "\n" + b);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(errorMessage.orElse("Validation failed on request body"));
     }
 }
