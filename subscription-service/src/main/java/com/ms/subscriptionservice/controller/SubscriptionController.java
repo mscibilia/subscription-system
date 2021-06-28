@@ -23,7 +23,6 @@ public class SubscriptionController {
 
     private final SubscriptionService subscriptionService;
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public ResponseEntity<?> createSubscription(@Valid @RequestBody CreateSubscriptionRequestModel requestModel, BindingResult result) {
         try {
@@ -37,14 +36,14 @@ public class SubscriptionController {
     }
 
     @GetMapping
-    public GetAllSubscriptionsResponseModel getAllSubscriptions() {
-        return new GetAllSubscriptionsResponseModel(subscriptionService.getAllSubscriptions());
+    public ResponseEntity<GetAllSubscriptionsResponseModel> getAllSubscriptions() {
+        return ResponseEntity.ok(new GetAllSubscriptionsResponseModel(subscriptionService.getAllSubscriptions()));
     }
 
     @GetMapping(path = "/{subscriptionId}")
-    public GetSubscriptionResponseModel getSubscription(@PathVariable long subscriptionId) {
+    public ResponseEntity<GetSubscriptionResponseModel> getSubscription(@PathVariable long subscriptionId) {
         try {
-            return new GetSubscriptionResponseModel(subscriptionService.getSubscription(subscriptionId));
+            return ResponseEntity.ok(new GetSubscriptionResponseModel(subscriptionService.getSubscription(subscriptionId)));
         } catch (SubscriptionNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
