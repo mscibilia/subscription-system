@@ -10,8 +10,26 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Data
-public class UpdateSubscriptionRequestModel extends CreateSubscriptionRequestModel {
+public class UpdateSubscriptionRequestModel {
 
     @NotNull(message = "subscription id is mandatory")
     private Long subscriptionId;
+
+    @NotBlank(message = "email address is mandatory")
+    private String emailAddress;
+
+    @NotNull(message = "consent flag is mandatory")
+    private Boolean consentFlag;
+
+    @NotNull(message = "date of birth is mandatory")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    private LocalDate dateOfBirth;
+
+    @NotBlank(message = "newsletter id is mandatory")
+    private String newsletterId;
+
+    private String firstName;
+
+    private Gender gender;
 }

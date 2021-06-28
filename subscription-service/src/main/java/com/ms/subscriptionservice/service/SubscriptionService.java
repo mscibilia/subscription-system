@@ -49,16 +49,7 @@ public class SubscriptionService {
         logger.info("Checking subscription with id {} exists", subscriptionIdToUpdate);
         if(subscriptionRepository.existsById(subscriptionIdToUpdate)) {
             logger.info("Updating subscription with id {}", subscriptionIdToUpdate);
-            SubscriptionDto subscriptionDto = SubscriptionDto
-                    .builder()
-                    .id(requestModel.getSubscriptionId())
-                    .emailAddress(requestModel.getEmailAddress())
-                    .dateOfBirth(requestModel.getDateOfBirth())
-                    .firstName(requestModel.getFirstName())
-                    .gender(requestModel.getGender())
-                    .newsletterId(requestModel.getNewsletterId())
-                    .consentFlag(requestModel.getConsentFlag())
-                    .build();
+            SubscriptionDto subscriptionDto = buildSubscriptionDtoFromUpdateSubscriptionRequestModel(requestModel);
 
             subscriptionRepository.save(subscriptionDto);
             logger.info("Subscription with id {} updated", subscriptionIdToUpdate);
@@ -79,15 +70,7 @@ public class SubscriptionService {
         }
 
         logger.info("Creating subscription: {}", requestModel.toString());
-        SubscriptionDto subscriptionDto = SubscriptionDto
-                .builder()
-                .emailAddress(requestModel.getEmailAddress())
-                .dateOfBirth(requestModel.getDateOfBirth())
-                .firstName(requestModel.getFirstName())
-                .gender(requestModel.getGender())
-                .newsletterId(requestModel.getNewsletterId())
-                .consentFlag(requestModel.getConsentFlag())
-                .build();
+        SubscriptionDto subscriptionDto = buildSubscriptionDtoFromCreateSubscriptionRequestModel(requestModel);
 
         SubscriptionDto savedSubscriptionDto = subscriptionRepository.save(subscriptionDto);
         logger.info("Subscription persisted with id {}", savedSubscriptionDto.getId());
@@ -98,4 +81,28 @@ public class SubscriptionService {
         return savedSubscriptionDto.getId();
     }
 
+    private SubscriptionDto buildSubscriptionDtoFromCreateSubscriptionRequestModel(CreateSubscriptionRequestModel requestModel) {
+        return SubscriptionDto
+                .builder()
+                .emailAddress(requestModel.getEmailAddress())
+                .dateOfBirth(requestModel.getDateOfBirth())
+                .firstName(requestModel.getFirstName())
+                .gender(requestModel.getGender())
+                .newsletterId(requestModel.getNewsletterId())
+                .consentFlag(requestModel.getConsentFlag())
+                .build();
+    }
+
+    private SubscriptionDto buildSubscriptionDtoFromUpdateSubscriptionRequestModel(UpdateSubscriptionRequestModel requestModel) {
+        return SubscriptionDto
+                .builder()
+                .id(requestModel.getSubscriptionId())
+                .emailAddress(requestModel.getEmailAddress())
+                .dateOfBirth(requestModel.getDateOfBirth())
+                .firstName(requestModel.getFirstName())
+                .gender(requestModel.getGender())
+                .newsletterId(requestModel.getNewsletterId())
+                .consentFlag(requestModel.getConsentFlag())
+                .build();
+    }
 }
